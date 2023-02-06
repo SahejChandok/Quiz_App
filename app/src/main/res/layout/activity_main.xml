@@ -31,4 +31,12 @@
         android:layout_marginBottom="16dp"
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
+    <ImageView
+        android:id="@+id/uottawa_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:contentDescription="uottawa logo"
+        app:srcCompat="@drawable/uottawa_logo_2" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
