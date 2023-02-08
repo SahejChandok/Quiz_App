@@ -27,6 +27,15 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:name=".NavigatorActivity"
+            android:theme="@style/Theme.Quiz_game_app.NoActionBar"></activity>
+        <activity
+            android:name=".ScoresActivity"
+            android:theme="@style/Theme.Quiz_game_app.NoActionBar"></activity>
+        <activity
+            android:name=".GameActivity"
+            android:theme="@style/Theme.Quiz_game_app.NoActionBar"></activity>
     </application>
 
 </manifest>

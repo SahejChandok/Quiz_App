@@ -13,15 +13,25 @@ import android.view.MenuItem
 import android.widget.Button
 import com.example.quiz_game_app.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class NavigatorActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val okButton = findViewById<Button>(R.id.nav_navigator_screen)
-        okButton.setOnClickListener {
-            val intent = Intent(this, NavigatorActivity::class.java)
+        setContentView(R.layout.activity_navigator)
+        val startGame = findViewById<Button>(R.id.start_game)
+        val goBack = findViewById<Button>(R.id.nav_home_screen)
+        val viewScores = findViewById<Button>(R.id.view_score)
+        goBack.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
             finish()
+            startActivity(intent)
+        }
+        viewScores.setOnClickListener {
+            val intent = Intent(this, ScoresActivity::class.java)
+            startActivity(intent)
+        }
+        startGame.setOnClickListener {
+            val intent = Intent(this, GameActivity::class.java)
             startActivity(intent)
         }
     }
