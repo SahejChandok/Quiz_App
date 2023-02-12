@@ -13,7 +13,7 @@ import android.view.MenuItem
 import android.widget.Button
 import com.example.quiz_game_app.databinding.ActivityMainBinding
 
-class NavigatorActivity : AppCompatActivity() {
+class   NavigatorActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
