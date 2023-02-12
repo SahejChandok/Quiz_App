@@ -4,16 +4,128 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ScoresActivity">
+    tools:context=".GameActivity">
 
-    <TextView
-        android:id="@+id/textView2"
+
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Game Screen"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/card"
+        android:padding="2dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="360dp"
+            android:layout_height="655dp"
+            app:cardCornerRadius="25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="25dp"
+                android:text="QUESTIONS"
+                android:textColor="@color/black"
+                android:textSize="45sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/countdown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="100dp"
+
+                android:text="00:15"
+                android:textSize="24sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+
+            <TextView
+                android:id="@+id/questions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="200dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="QUESTION"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="@color/black">
+
+            </TextView>
+
+            <android.widget.Button
+                android:id="@+id/option1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="300dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="40dp"
+                android:background="@drawable/option"
+                android:enabled="true"
+                android:onClick="option1Clicked"
+                android:text="option1"
+                android:textColor="@color/black"
+                android:textSize="20dp">
+
+            </android.widget.Button>
+
+
+            <android.widget.Button
+                android:id="@+id/option2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="375dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="40dp"
+                android:background="@drawable/option"
+                android:enabled="true"
+                android:onClick="option2Clicked"
+                android:text="option2"
+                android:textColor="@color/black"
+                android:textSize="20dp">
+
+            </android.widget.Button>
+
+            <android.widget.Button
+                android:id="@+id/option3"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="450dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="40dp"
+                android:background="@drawable/option"
+                android:enabled="true"
+                android:onClick="option3Clicked"
+                android:text="option3"
+                android:textColor="@color/black"
+                android:textSize="20dp">
+
+            </android.widget.Button>
+
+
+
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
