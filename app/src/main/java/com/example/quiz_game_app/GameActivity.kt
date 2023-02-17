@@ -16,6 +16,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
@@ -37,12 +38,19 @@ class GameActivity : AppCompatActivity() {
     lateinit var option3:Button
     private var backPressedTime: Long = 0
     private var backToast: Toast? = null
+    private var color = getColor()
+
+    private fun getColor(): Int {
+        return (Math.random() * 16777215).toInt() or (0xFF shl 24)
+    }
 
     private lateinit var mediaPlayer: MediaPlayer
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
         supportActionBar?.hide()
+        val activityView = findViewById<ConstraintLayout>(R.id.GameLayout)
+        activityView.setBackgroundColor(getColor())
         mediaPlayer = MediaPlayer.create(applicationContext, R.raw.glory)
         mediaPlayer.isLooping = true
         mediaPlayer.start()
@@ -126,9 +134,6 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun setAllQuestions() {
-
-
-
                 questions.text = questionModel.question
                 option1.text = questionModel.option1
                 option2.text = questionModel.option2
@@ -152,6 +157,9 @@ class GameActivity : AppCompatActivity() {
         option1.background=resources.getDrawable(R.drawable.option)
         option2.background=resources.getDrawable(R.drawable.option)
         option3.background=resources.getDrawable(R.drawable.option)
+        val color = getColor()
+        val view = findViewById<ConstraintLayout>(R.id.GameLayout)
+        view.setBackgroundColor(color)
     }
 
     fun option1Clicked(view: View){
@@ -196,10 +204,10 @@ class GameActivity : AppCompatActivity() {
 
 
 
-   /*override fun onStop() {
+   override fun onStop() {
         super.onStop()
         if(mediaPlayer != null) {
             mediaPlayer.stop()
         }
-    }*/
+   }
 }
