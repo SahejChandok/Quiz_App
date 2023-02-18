@@ -28,6 +28,7 @@ class GameActivity : AppCompatActivity() {
     lateinit var qlists:ArrayList<QuestionModel>
     private var index:Int=0
     lateinit var questionModel: QuestionModel
+    lateinit var answeredQuestion: AnsweredQuestion
     private var correctans:Int=0
     var count=0
     private var wrongans:Int=0
@@ -37,8 +38,7 @@ class GameActivity : AppCompatActivity() {
     lateinit var option2:Button
     lateinit var option3:Button
     private var backPressedTime: Long = 0
-    private var backToast: Toast? = null
-    private var color = getColor()
+    private lateinit var answeredQuestionList: ArrayList<AnsweredQuestion>
 
     private fun getColor(): Int {
         return (Math.random() * 16777215).toInt() or (0xFF shl 24)
@@ -61,6 +61,7 @@ class GameActivity : AppCompatActivity() {
         option3=findViewById(R.id.option3)
 
         qlists=ArrayList()
+        answeredQuestionList = ArrayList()
         qlists.add(QuestionModel("1+1?","2","3","4","2"))
         qlists.add(QuestionModel("1*1?","2","1","4","1"))
         qlists.add(QuestionModel("1-1?","2","3","0","3"))
@@ -127,10 +128,13 @@ class GameActivity : AppCompatActivity() {
         var intent=Intent(this,ScoresActivity::class.java)
         var intent1=Intent(this, DisplayActivity::class.java)
        // setContentView(R.layout.display)
-        intent.putExtra("correct",correctans.toString())
-        intent.putExtra("total",count.toString())
-
-        startActivity(intent)
+//        intent.putExtra("correct",correctans.toString())
+//        intent.putExtra("total",count.toString())
+//
+//        startActivity(intent)
+        var intent3 = Intent(this, AnsweredQuestionListActivity::class.java)
+        intent3.putParcelableArrayListExtra("question-list", answeredQuestionList)
+        startActivity(intent3)
     }
 
     private fun setAllQuestions() {
@@ -139,9 +143,6 @@ class GameActivity : AppCompatActivity() {
                 option2.text = questionModel.option2
                 option3.text = questionModel.option3
             }
-
-
-
 
     private fun enableButton(){
         option1.isClickable=true
@@ -164,6 +165,7 @@ class GameActivity : AppCompatActivity() {
 
     fun option1Clicked(view: View){
         disableButton()
+        val isCorrect: Boolean = questionModel.option2==questionModel.answer
         if(questionModel.option1==questionModel.answer){
             option1.background=resources.getDrawable(R.drawable.right)
 
@@ -174,9 +176,11 @@ class GameActivity : AppCompatActivity() {
         else{
             wrongAnswer(option1)
         }
+        addAnsweredQuestion(questionModel.option1, isCorrect)
     }
     fun option2Clicked(view: View){
         disableButton()
+        val isCorrect: Boolean = questionModel.option2==questionModel.answer
         if(questionModel.option2==questionModel.answer){
             option2.background=resources.getDrawable(R.drawable.right)
 
@@ -187,10 +191,12 @@ class GameActivity : AppCompatActivity() {
         else{
             wrongAnswer(option2)
         }
+        addAnsweredQuestion(questionModel.option2, isCorrect)
     }
     fun option3Clicked(view: View){
         disableButton()
-        if(questionModel.option3==questionModel.answer){
+        val isCorrect: Boolean = questionModel.option3==questionModel.answer
+        if(isCorrect){
             option1.background=resources.getDrawable(R.drawable.right)
 
 
@@ -200,6 +206,12 @@ class GameActivity : AppCompatActivity() {
         else{
             wrongAnswer(option3)
         }
+        addAnsweredQuestion(questionModel.option3, isCorrect)
+    }
+
+    private fun addAnsweredQuestion(userAnswer: String, isCorrect: Boolean) {
+        answeredQuestionList.add(AnsweredQuestion(questionModel.question, questionModel.option1,
+        questionModel.option2, questionModel.option3, questionModel.answer, userAnswer, isCorrect))
     }
 
 
