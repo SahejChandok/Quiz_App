@@ -4,27 +4,128 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
-import com.example.quiz_game_app.databinding.ActivityMainBinding
-
 
 
 class GameActivity : AppCompatActivity() {
+    val questionList = arrayListOf<String>(
+        "How many bones are there in an adult human body?",
+        "In The Lion King, who is Simba’s uncle?",
+        "The Union Jack is the name of which country’s flag?",
+        "Which Nobel Prize did Winston Churchill win?",
+        "Which actress played Emily Cooper in 'Emily in Paris'?",
+        "Which one of the following is the correct spelling?",
+        "Which one of the following is not a character in the cartoon 'The Powerpuff Girls'?",
+        "What’s Garfield favourite food?",
+        "Which chemical element has Ag as a symbol?",
+        "How many elements are there on the periodic table?",
+        "In the Big Bang Theory, what is the name of Sheldon and Leonard’s neighbour?",
+        "What is the largest continent in size?",
+        "Which famous inventor invented the telephone?",
+        "What does the Richter scale measure?",
+        "What is the longest river in the world?",
+        "How many sides has a Hexagon?",
+        "Who is the CEO of Amazon?",
+        "What was Euclid?",
+        "What is the capital of Iraq?",
+        "What colour is the 'm' from the McDonald’s logo?"
+    )
+    val option1List = arrayListOf<String>(
+        "186",
+        "Scar",
+        "USA",
+        "Peace",
+        "Lily Collins",
+        "Maintanence",
+        "Blossom",
+        "Lasagna",
+        "Gold",
+        "100",
+        "Penny",
+        "America",
+        "Thomas Edison",
+        "Earthquake intensity",
+        "Amazon river",
+        "5",
+        "Jeff Bezos",
+        "Mathematician",
+        "Tehran",
+        "Red"
+
+    )
+    val option2List = arrayListOf<String>(
+        "206",
+        "Timon",
+        "Australia",
+        "Literature",
+        "Lily James",
+        "Maintanance",
+        "Butterfly",
+        "Pizza",
+        "Iron",
+        "118",
+        "Patty",
+        "Europe",
+        "Alexander Graham Bell",
+        "Temperature",
+        "Congo river",
+        "6",
+        "Mark Zuckerberg",
+        "Poet",
+        "Bhagdad",
+        "Blue"
+    )
+    val option3List = arrayListOf<String>(
+        "286",
+        "Pumba",
+        "UK",
+        "History",
+        "Gal Gaddot",
+        "Maintenance",
+        "Bubbles",
+        "Burger",
+        "Silver",
+        "80",
+        "Leslie",
+        "Asia",
+        "Benjamin Franklin",
+        "Water level",
+        "Nile",
+        "7",
+        "Elon Musk",
+        "Philosopher",
+        "Islamabad",
+        "Yellow"
+    )
+    val answerList = arrayListOf<Int>(
+        2,
+        1,
+        3,
+        2,
+        1,
+        3,
+        2,
+        1,
+        3,
+        2,
+        1,
+        3,
+        2,
+        1,
+        3,
+        2,
+        1,
+        1,
+        2,
+        3
+    )
     lateinit var qlists:ArrayList<QuestionModel>
     private var index:Int=0
     lateinit var questionModel: QuestionModel
@@ -37,6 +138,7 @@ class GameActivity : AppCompatActivity() {
     lateinit var option2:Button
     lateinit var option3:Button
     var userAnswer: Int = 0
+    var questionIndexesToAsk = (0..19).shuffled().take(4)
     private var backPressedTime: Long = 0
     private lateinit var answeredQuestionList: ArrayList<AnsweredQuestion>
 
@@ -59,15 +161,16 @@ class GameActivity : AppCompatActivity() {
         option1=findViewById(R.id.option1)
         option2=findViewById(R.id.option2)
         option3=findViewById(R.id.option3)
-
         qlists=ArrayList()
+        for(idx in questionList.indices) {
+            qlists.add(
+                QuestionModel(questionList[idx], option1List[idx], option2List[idx],
+                option3List[idx], answerList[idx])
+            )
+        }
         answeredQuestionList = ArrayList()
-        qlists.add(QuestionModel("1+1?","2","3","4",1))
-        qlists.add(QuestionModel("1*1?","2","1","4",2))
-        qlists.add(QuestionModel("1-1?","2","3","0",3))
-        qlists.add(QuestionModel("2+2?","2","3","4",3))
-        qlists.add(QuestionModel("2-3?","2","-1","4",2))
-        questionModel= qlists[index]
+
+        questionModel= qlists[questionIndexesToAsk[count]]
         setAllQuestions()
         countdown()
 
@@ -99,9 +202,8 @@ class GameActivity : AppCompatActivity() {
                 answeredQuestionList.add(answeredQuestion)
                 userAnswer = 0
                 count++
-                if (count < 5) {
-                    index=kotlin.random.Random.nextInt(5)
-                    questionModel = qlists[index]
+                if (count < questionIndexesToAsk.size) {
+                    questionModel = qlists[questionIndexesToAsk[count]]
                     setAllQuestions()
                     resetBackground()
                     enableButton()
