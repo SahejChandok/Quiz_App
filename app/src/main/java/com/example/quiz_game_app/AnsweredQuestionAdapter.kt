@@ -28,38 +28,30 @@ class AnsweredQuestionAdapter(private val context: Activity, private val arrayLi
         val option3: String = arrayList[position].option3
         val question: String = arrayList[position].question
         val answer = arrayList[position].answer
-        val userAnswer = arrayList[position].user_answer
-        val isCorrect = arrayList[position].is_correct
+        val userAnswer = arrayList[position].userAnswer
+        val isCorrect = answer == userAnswer
 
         question_text.text = question
         option_1_text.text = option1
         option_2_text.text = option2
         option_3_text.text = option3
 
-
-        if(answer == option1 ) {
-            option_1_text.setTextColor(Color.GREEN)
-            option_1_text.typeface = Typeface.DEFAULT_BOLD
-        } else if(answer == option2) {
-            option_2_text.setTextColor(Color.GREEN)
-            option_2_text.typeface = Typeface.DEFAULT_BOLD
+        if(answer == 1 ) {
+            option_1_text.setBackgroundResource(R.drawable.right)
+        } else if(answer == 2) {
+            option_2_text.setBackgroundResource(R.drawable.right)
         } else {
-            option_3_text.setTextColor(Color.GREEN)
-            option_3_text.typeface = Typeface.DEFAULT_BOLD
+            option_3_text.setBackgroundResource(R.drawable.right)
         }
-        if(isCorrect == false) {
-            if(userAnswer == option1) {
-                option_1_text.setTextColor(Color.RED)
-                option_1_text.typeface = Typeface.DEFAULT_BOLD
-            } else if(userAnswer == option2) {
-                option_2_text.setTextColor(Color.RED)
-                option_2_text.typeface = Typeface.DEFAULT_BOLD
-            } else if(userAnswer == option3 ) {
-                option_3_text.setTextColor(Color.RED)
-                option_3_text.typeface = Typeface.DEFAULT_BOLD
+        if(!isCorrect) {
+            if(userAnswer == 1) {
+                option_1_text.setBackgroundResource(R.drawable.wrong)
+            } else if(userAnswer == 2) {
+                option_2_text.setBackgroundResource(R.drawable.wrong)
+            } else if(userAnswer == 3 ) {
+                option_3_text.setBackgroundResource(R.drawable.wrong)
             }
         }
-
         return view
 
     }

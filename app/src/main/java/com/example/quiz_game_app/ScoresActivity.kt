@@ -2,18 +2,11 @@ package com.example.quiz_game_app
 
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
+import android.os.Parcelable
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.example.quiz_game_app.databinding.ActivityMainBinding
 
 class ScoresActivity : AppCompatActivity() {
      lateinit var correctAns:TextView
@@ -33,6 +26,16 @@ class ScoresActivity : AppCompatActivity() {
         val intent=intent
         val NoOfCorrectAns=intent.getStringExtra("correct")
         val NoOfTotal = intent.getStringExtra("total")
+        val answeredQuestionList = intent.getParcelableArrayListExtra<Parcelable>("question-list")
+        val viewAnswersButton = findViewById<Button>(R.id.view_answers_btn)
+        viewAnswersButton.setOnClickListener {
+            val answeredQuestionsActivityIntent = Intent(this,
+                AnsweredQuestionListActivity::class.java)
+            answeredQuestionsActivityIntent.putParcelableArrayListExtra("question-list",
+                answeredQuestionList)
+            finish()
+            startActivity(answeredQuestionsActivityIntent)
+        }
         correctAns.text=NoOfCorrectAns
         totalAns.text=NoOfTotal
 

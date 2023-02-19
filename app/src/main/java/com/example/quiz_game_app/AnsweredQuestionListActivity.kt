@@ -15,12 +15,19 @@ class AnsweredQuestionListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_answered_question_list)
         val listView: ListView = findViewById<ListView>(R.id.answered_question_list)
+        val homeButton: Button = findViewById(R.id.nav_home_button)
         val parcelableList = this.intent.getParcelableArrayListExtra<Parcelable>("question-list")
         val questions: ArrayList<AnsweredQuestion> = ArrayList()
         if (parcelableList != null) {
             for (parcel in parcelableList) {
-                questions.add(parcel as AnsweredQuestion)
+                val item: AnsweredQuestion = parcel as AnsweredQuestion
+                questions.add(item)
             }
+        }
+        homeButton.setOnClickListener {
+            val intent = Intent(this, NavigatorActivity::class.java)
+            finish()
+            startActivity(intent)
         }
 
         listView.adapter = AnsweredQuestionAdapter(this,

@@ -28,7 +28,6 @@ class GameActivity : AppCompatActivity() {
     lateinit var qlists:ArrayList<QuestionModel>
     private var index:Int=0
     lateinit var questionModel: QuestionModel
-    lateinit var answeredQuestion: AnsweredQuestion
     private var correctans:Int=0
     var count=0
     private var wrongans:Int=0
@@ -37,6 +36,7 @@ class GameActivity : AppCompatActivity() {
     lateinit var option1:Button
     lateinit var option2:Button
     lateinit var option3:Button
+    var userAnswer: Int = 0
     private var backPressedTime: Long = 0
     private lateinit var answeredQuestionList: ArrayList<AnsweredQuestion>
 
@@ -62,15 +62,11 @@ class GameActivity : AppCompatActivity() {
 
         qlists=ArrayList()
         answeredQuestionList = ArrayList()
-        qlists.add(QuestionModel("1+1?","2","3","4","2"))
-        qlists.add(QuestionModel("1*1?","2","1","4","1"))
-        qlists.add(QuestionModel("1-1?","2","3","0","3"))
-        qlists.add(QuestionModel("2+2?","2","3","4","3"))
-        qlists.add(QuestionModel("2-3?","2","-1","4","2"))
-
-
-
-
+        qlists.add(QuestionModel("1+1?","2","3","4",1))
+        qlists.add(QuestionModel("1*1?","2","1","4",2))
+        qlists.add(QuestionModel("1-1?","2","3","0",3))
+        qlists.add(QuestionModel("2+2?","2","3","4",3))
+        qlists.add(QuestionModel("2-3?","2","-1","4",2))
         questionModel= qlists[index]
         setAllQuestions()
         countdown()
@@ -97,8 +93,13 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onFinish() {
+                var answeredQuestion = AnsweredQuestion(questionModel.question,
+                questionModel.option1, questionModel.option2, questionModel.option3,
+                    questionModel.answer, userAnswer)
+                answeredQuestionList.add(answeredQuestion)
+                userAnswer = 0
                 count++
-                if (count < 2) {
+                if (count < 5) {
                     index=kotlin.random.Random.nextInt(5)
                     questionModel = qlists[index]
                     setAllQuestions()
@@ -107,7 +108,6 @@ class GameActivity : AppCompatActivity() {
                     countdown()
 
                 } else {
-
                     display()
 
                 }
@@ -121,28 +121,24 @@ class GameActivity : AppCompatActivity() {
         correctans++
     }
     private fun wrongAnswer(option: Button){
-        option.background=getDrawable(R.drawable.right)
+        option.background=getDrawable(R.drawable.wrong)
         wrongans++
     }
     private fun display(){
         var intent=Intent(this,ScoresActivity::class.java)
-        var intent1=Intent(this, DisplayActivity::class.java)
-       // setContentView(R.layout.display)
-//        intent.putExtra("correct",correctans.toString())
-//        intent.putExtra("total",count.toString())
-//
-//        startActivity(intent)
-        var intent3 = Intent(this, AnsweredQuestionListActivity::class.java)
-        intent3.putParcelableArrayListExtra("question-list", answeredQuestionList)
-        startActivity(intent3)
+        intent.putExtra("correct",correctans.toString())
+        intent.putExtra("total",count.toString())
+        intent.putParcelableArrayListExtra("question-list", answeredQuestionList)
+        finish()
+        startActivity(intent)
     }
 
     private fun setAllQuestions() {
-                questions.text = questionModel.question
-                option1.text = questionModel.option1
-                option2.text = questionModel.option2
-                option3.text = questionModel.option3
-            }
+        questions.text = questionModel.question
+        option1.text = questionModel.option1
+        option2.text = questionModel.option2
+        option3.text = questionModel.option3
+    }
 
     private fun enableButton(){
         option1.isClickable=true
@@ -165,61 +161,39 @@ class GameActivity : AppCompatActivity() {
 
     fun option1Clicked(view: View){
         disableButton()
-        val isCorrect: Boolean = questionModel.option2==questionModel.answer
-        if(questionModel.option1==questionModel.answer){
-            option1.background=resources.getDrawable(R.drawable.right)
-
-
+        userAnswer = 1
+        if(questionModel.answer == 1){
             correctAnswer(option1)
-
         }
         else{
             wrongAnswer(option1)
         }
-        addAnsweredQuestion(questionModel.option1, isCorrect)
     }
     fun option2Clicked(view: View){
         disableButton()
-        val isCorrect: Boolean = questionModel.option2==questionModel.answer
-        if(questionModel.option2==questionModel.answer){
-            option2.background=resources.getDrawable(R.drawable.right)
-
-
+        userAnswer = 2
+        if(questionModel.answer == 2){
             correctAnswer(option2)
-
         }
         else{
             wrongAnswer(option2)
         }
-        addAnsweredQuestion(questionModel.option2, isCorrect)
     }
     fun option3Clicked(view: View){
         disableButton()
-        val isCorrect: Boolean = questionModel.option3==questionModel.answer
-        if(isCorrect){
-            option1.background=resources.getDrawable(R.drawable.right)
-
-
+        userAnswer = 3
+        if(questionModel.answer == 3){
             correctAnswer(option3)
-
         }
         else{
             wrongAnswer(option3)
         }
-        addAnsweredQuestion(questionModel.option3, isCorrect)
-    }
-
-    private fun addAnsweredQuestion(userAnswer: String, isCorrect: Boolean) {
-        answeredQuestionList.add(AnsweredQuestion(questionModel.question, questionModel.option1,
-        questionModel.option2, questionModel.option3, questionModel.answer, userAnswer, isCorrect))
     }
 
 
 
    override fun onStop() {
         super.onStop()
-        if(mediaPlayer != null) {
-            mediaPlayer.stop()
-        }
+       mediaPlayer.stop()
    }
 }
