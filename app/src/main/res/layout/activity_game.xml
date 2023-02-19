@@ -45,7 +45,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="100dp"
-
                 android:text="00:15"
                 android:textSize="24sp"
                 android:textStyle="bold">
@@ -80,6 +79,7 @@
                 android:enabled="true"
                 android:onClick="option1Clicked"
                 android:text="option1"
+                android:textAllCaps="false"
                 android:textColor="@color/black"
                 android:textSize="20dp">
 
@@ -99,6 +99,7 @@
                 android:enabled="true"
                 android:onClick="option2Clicked"
                 android:text="option2"
+                android:textAllCaps="false"
                 android:textColor="@color/black"
                 android:textSize="20dp">
 
@@ -117,6 +118,7 @@
                 android:enabled="true"
                 android:onClick="option3Clicked"
                 android:text="option3"
+                android:textAllCaps="false"
                 android:textColor="@color/black"
                 android:textSize="20dp">
 
