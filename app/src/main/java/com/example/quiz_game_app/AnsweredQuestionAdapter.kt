@@ -7,6 +7,10 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 
+/**
+ * This adaptor supplies the data to the listView,
+ * here we read the data from the database.
+ */
 class AnsweredQuestionAdapter(private val context: Activity, private val arrayList: ArrayList<AnsweredQuestion>) : ArrayAdapter<AnsweredQuestion>(context,
     R.layout.answered_question_list_item_view, arrayList) {
 
@@ -31,7 +35,7 @@ class AnsweredQuestionAdapter(private val context: Activity, private val arrayLi
         option_1_text.text = option1
         option_2_text.text = option2
         option_3_text.text = option3
-
+        // used for highlighting the correct answer
         if(answer == 1 ) {
             option_1_text.setBackgroundResource(R.drawable.right)
         } else if(answer == 2) {
@@ -39,6 +43,8 @@ class AnsweredQuestionAdapter(private val context: Activity, private val arrayLi
         } else {
             option_3_text.setBackgroundResource(R.drawable.right)
         }
+        // if the user gave an incorrect answer, the same will be
+        // highlighted as well
         if(!isCorrect) {
             if(userAnswer == 1) {
                 option_1_text.setBackgroundResource(R.drawable.wrong)

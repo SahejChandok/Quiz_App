@@ -5,6 +5,9 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
+/**
+ * Class that has all the queries defined on Score
+ */
 @Dao
 interface ScoreDao {
     @Query("SELECT * FROM scores ORDER BY scores.id DESC")

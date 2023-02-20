@@ -8,6 +8,9 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 
+/**
+ * Class to display the score of the game that the user just finished.
+ */
 class ScoresActivity : AppCompatActivity() {
      lateinit var correctAns:TextView
      lateinit var totalAns:TextView

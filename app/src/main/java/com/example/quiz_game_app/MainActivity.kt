@@ -5,7 +5,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
 
-
+/**
+ * Welcome screen of the application displays the logo, title and button
+ */
 class MainActivity : AppCompatActivity() {
     private lateinit var appDatabase: AppDatabase
 

@@ -8,7 +8,10 @@ import android.widget.Button
 import android.widget.ListView
 import kotlin.collections.ArrayList
 
-
+/**
+ * Activity which contains the list view for displaying answered questions
+ * and a button to navigate to the home screen
+ */
 class AnsweredQuestionListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

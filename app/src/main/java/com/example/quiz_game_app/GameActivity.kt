@@ -1,8 +1,6 @@
 package com.example.quiz_game_app
 
-import android.content.Context
 import android.content.Intent
-import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -18,8 +16,14 @@ import net.datafaker.Faker
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-
+/**
+ * This activity contains the questions for the game,
+ * picks 4 random questions for the game for a user
+ * and at the end saves the score in the database
+ * Also, has media player to play background music.
+ */
 class GameActivity : AppCompatActivity() {
+    // array for questions
     private val questionList = arrayListOf<String>(
         "How many bones are there in an adult human body?",
         "In The Lion King, who is Simba’s uncle?",
@@ -42,6 +46,7 @@ class GameActivity : AppCompatActivity() {
         "What is the capital of Iraq?",
         "What colour is the 'm' from the McDonald’s logo?"
     )
+    // array for option 1
     private val option1List = arrayListOf<String>(
         "186",
         "Scar",
@@ -65,6 +70,7 @@ class GameActivity : AppCompatActivity() {
         "Red"
 
     )
+    // array for option 2
     private val option2List = arrayListOf<String>(
         "206",
         "Timon",
@@ -84,9 +90,10 @@ class GameActivity : AppCompatActivity() {
         "6",
         "Mark Zuckerberg",
         "Poet",
-        "Bhagdad",
+        "Baghdad",
         "Blue"
     )
+    // array for option 3
     private val option3List = arrayListOf<String>(
         "286",
         "Pumba",
@@ -109,6 +116,7 @@ class GameActivity : AppCompatActivity() {
         "Islamabad",
         "Yellow"
     )
+    // array for answer - contains number of correct option (1,2 or 3)
     private val answerList = arrayListOf<Int>(
         2,
         1,
@@ -133,7 +141,6 @@ class GameActivity : AppCompatActivity() {
     )
     private lateinit var appDb: AppDatabase
     lateinit var qlists:ArrayList<QuestionModel>
-    private var index:Int=0
     private val faker = Faker()
     lateinit var questionModel: QuestionModel
     private var correctans:Int=0
@@ -146,7 +153,6 @@ class GameActivity : AppCompatActivity() {
     lateinit var option3:Button
     var userAnswer: Int = 0
     var questionIndexesToAsk = (0..19).shuffled().take(4)
-    private var backPressedTime: Long = 0
     private lateinit var answeredQuestionList: ArrayList<AnsweredQuestion>
 
     private fun getColor(): Int {
@@ -185,6 +191,12 @@ class GameActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * code that keeps track of the timer and
+     * sets the question, records question in answered question
+     * and resets the timer and changes background color of screen for each
+     * question
+     */
     fun countdown(){
         var duration:Long=TimeUnit.SECONDS.toMillis(10)
 
@@ -234,6 +246,7 @@ class GameActivity : AppCompatActivity() {
         option.background=getDrawable(R.drawable.wrong)
         wrongans++
     }
+    // method to redirect user to display the final score
     private fun display(){
         writeData(correctans)
         var intent=Intent(this,ScoresActivity::class.java)
@@ -243,24 +256,26 @@ class GameActivity : AppCompatActivity() {
         finish()
         startActivity(intent)
     }
-
+    // method to set the new question
     private fun setAllQuestions() {
         questions.text = questionModel.question
         option1.text = questionModel.option1
         option2.text = questionModel.option2
         option3.text = questionModel.option3
     }
-
+    // method to enable click on option
     private fun enableButton(){
         option1.isClickable=true
         option2.isClickable=true
         option3.isClickable=true
     }
+    // method to disable click on option
     private fun disableButton(){
         option1.isClickable=false
         option2.isClickable=false
         option3.isClickable=false
     }
+    // method to set a random background color and reset options background
     private fun resetBackground(){
         option1.background=resources.getDrawable(R.drawable.option)
         option2.background=resources.getDrawable(R.drawable.option)
