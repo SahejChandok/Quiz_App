@@ -1,21 +1,26 @@
 package com.example.quiz_game_app
 
+import android.content.Context
 import android.content.Intent
+import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
-import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import net.datafaker.Faker
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
 
 
 class GameActivity : AppCompatActivity() {
-    val questionList = arrayListOf<String>(
+    private val questionList = arrayListOf<String>(
         "How many bones are there in an adult human body?",
         "In The Lion King, who is Simba’s uncle?",
         "The Union Jack is the name of which country’s flag?",
@@ -37,7 +42,7 @@ class GameActivity : AppCompatActivity() {
         "What is the capital of Iraq?",
         "What colour is the 'm' from the McDonald’s logo?"
     )
-    val option1List = arrayListOf<String>(
+    private val option1List = arrayListOf<String>(
         "186",
         "Scar",
         "USA",
@@ -60,7 +65,7 @@ class GameActivity : AppCompatActivity() {
         "Red"
 
     )
-    val option2List = arrayListOf<String>(
+    private val option2List = arrayListOf<String>(
         "206",
         "Timon",
         "Australia",
@@ -82,7 +87,7 @@ class GameActivity : AppCompatActivity() {
         "Bhagdad",
         "Blue"
     )
-    val option3List = arrayListOf<String>(
+    private val option3List = arrayListOf<String>(
         "286",
         "Pumba",
         "UK",
@@ -104,7 +109,7 @@ class GameActivity : AppCompatActivity() {
         "Islamabad",
         "Yellow"
     )
-    val answerList = arrayListOf<Int>(
+    private val answerList = arrayListOf<Int>(
         2,
         1,
         3,
@@ -126,8 +131,10 @@ class GameActivity : AppCompatActivity() {
         2,
         3
     )
+    private lateinit var appDb: AppDatabase
     lateinit var qlists:ArrayList<QuestionModel>
     private var index:Int=0
+    private val faker = Faker()
     lateinit var questionModel: QuestionModel
     private var correctans:Int=0
     var count=0
@@ -146,11 +153,12 @@ class GameActivity : AppCompatActivity() {
         return (Math.random() * 16777215).toInt() or (0xFF shl 24)
     }
 
-    private lateinit var mediaPlayer: MediaPlayer
+    private var mediaPlayer: MediaPlayer? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
         supportActionBar?.hide()
+        appDb = AppDatabase.getDatabase(this)
         val activityView = findViewById<ConstraintLayout>(R.id.GameLayout)
         activityView.setBackgroundColor(getColor())
         mediaPlayer = MediaPlayer.create(applicationContext, R.raw.glory)
@@ -227,6 +235,7 @@ class GameActivity : AppCompatActivity() {
         wrongans++
     }
     private fun display(){
+        writeData(correctans)
         var intent=Intent(this,ScoresActivity::class.java)
         intent.putExtra("correct",correctans.toString())
         intent.putExtra("total",count.toString())
@@ -261,6 +270,16 @@ class GameActivity : AppCompatActivity() {
         view.setBackgroundColor(color)
     }
 
+    /**
+     * generate random user name and write data into the database
+     */
+    private fun writeData(score: Int) {
+
+        val score = Score(null, score, faker.name().username())
+        GlobalScope.launch(Dispatchers.IO) {
+            appDb.scoreDao().insert(score)
+        }
+    }
     fun option1Clicked(view: View){
         disableButton()
         userAnswer = 1
@@ -291,11 +310,13 @@ class GameActivity : AppCompatActivity() {
             wrongAnswer(option3)
         }
     }
-
-
-
    override fun onStop() {
         super.onStop()
-       mediaPlayer.stop()
+       if(!mediaPlayer) {
+           mediaPlayer.stop()
+           mediaPlayer.release()
+           mediaPlayer = null
+       }
+
    }
 }

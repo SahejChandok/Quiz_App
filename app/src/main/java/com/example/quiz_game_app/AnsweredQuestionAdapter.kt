@@ -1,10 +1,6 @@
 package com.example.quiz_game_app
 
 import android.app.Activity
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Typeface
-import android.util.Size
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

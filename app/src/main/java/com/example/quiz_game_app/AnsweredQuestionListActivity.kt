@@ -14,7 +14,7 @@ class AnsweredQuestionListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_answered_question_list)
-        val listView: ListView = findViewById<ListView>(R.id.answered_question_list)
+        val listView: ListView = findViewById<ListView>(R.id.score_list)
         val homeButton: Button = findViewById(R.id.nav_home_button)
         val parcelableList = this.intent.getParcelableArrayListExtra<Parcelable>("question-list")
         val questions: ArrayList<AnsweredQuestion> = ArrayList()
