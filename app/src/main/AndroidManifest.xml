@@ -39,6 +39,8 @@
         <activity
             android:name=".AnsweredQuestionListActivity"
             android:theme="@style/Theme.Quiz_game_app.NoActionBar"></activity>
+        <activity
+            android:name=".ScoreListActivity"
+            android:theme="@style/Theme.Quiz_game_app.NoActionBar"></activity>
     </application>
-
 </manifest>

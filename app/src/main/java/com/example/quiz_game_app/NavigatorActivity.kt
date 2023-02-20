@@ -19,7 +19,7 @@ class   NavigatorActivity : AppCompatActivity() {
             startActivity(intent)
         }
         viewScores.setOnClickListener {
-            val intent = Intent(this, ScoresActivity::class.java)
+            val intent = Intent(this, ScoreListActivity::class.java)
             startActivity(intent)
         }
         startGame.setOnClickListener {

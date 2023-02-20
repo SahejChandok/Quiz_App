@@ -7,9 +7,11 @@ import android.widget.Button
 
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var appDatabase: AppDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        appDatabase = AppDatabase.getDatabase(this)
         setContentView(R.layout.activity_main)
         val okButton = findViewById<Button>(R.id.nav_navigator_screen)
         okButton.setOnClickListener {
@@ -18,4 +20,4 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-}
+ }
