@@ -153,7 +153,7 @@ class GameActivity : AppCompatActivity() {
         return (Math.random() * 16777215).toInt() or (0xFF shl 24)
     }
 
-    private var mediaPlayer: MediaPlayer? = null
+    private lateinit var mediaPlayer: MediaPlayer
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
@@ -312,11 +312,7 @@ class GameActivity : AppCompatActivity() {
     }
    override fun onStop() {
         super.onStop()
-       if(!mediaPlayer) {
-           mediaPlayer.stop()
-           mediaPlayer.release()
-           mediaPlayer = null
-       }
+       mediaPlayer.stop()
 
    }
 }
