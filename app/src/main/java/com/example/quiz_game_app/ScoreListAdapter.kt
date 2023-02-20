@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 
+/**
+ * Class which supplies data to Score List View to display the username and score
+ */
 class ScoreListAdapter(private val context: Activity, private val arrayList: ArrayList<Score>) : ArrayAdapter<Score>(context,
     R.layout.activity_score_list_item, arrayList) {
 

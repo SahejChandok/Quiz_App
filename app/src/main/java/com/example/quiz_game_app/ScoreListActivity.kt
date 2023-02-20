@@ -12,6 +12,10 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlin.collections.ArrayList
 
+/**
+ * Score List activity is used to display past scores, in reverse chronological order
+ * and a navigation button to home screen
+ */
 
 class ScoreListActivity : AppCompatActivity() {
 
